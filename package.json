@@ -1,5 +1,5 @@
 {
-  "name": "monaco-volar-worker",
+  "name": "@vues3/monaco-volar-worker",
   "version": "0.1.2",
   "type": "module",
   "scripts": {
