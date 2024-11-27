@@ -1,7 +1,7 @@
 export default {
   build: {
     lib: {
-      entry: "vue.worker.js",
+      entry: "./src/vue.worker.js",
       formats: ["es"],
       name: "vue.worker.js",
     },
