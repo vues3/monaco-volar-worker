@@ -1,9 +1,9 @@
 export default {
   build: {
     lib: {
-      entry: "./src/vue.worker.js",
+      entry: "./src/vue.worker.ts",
       formats: ["es"],
-      name: "vue.worker.js",
+      name: "vue.worker.ts",
     },
     rollupOptions: {
       output: {

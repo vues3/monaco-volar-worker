@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "type": "module",
   "scripts": {
-    "build": "vite build"
+    "build": "tsc && vite build"
   },
   "dependencies": {
     "@shikijs/monaco": "^1.23.1",
