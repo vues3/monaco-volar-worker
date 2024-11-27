@@ -1,8 +1,0 @@
-{
-  "root": true,
-  "extends": [
-    "airbnb-base",
-    "plugin:perfectionist/recommended-natural-legacy",
-    "plugin:prettier/recommended"
-  ]
-}
