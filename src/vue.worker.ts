@@ -9,11 +9,13 @@ import {
   resolveVueCompilerOptions,
 } from "@vue/language-service";
 import { initialize } from "monaco-editor-core/esm/vs/editor/editor.worker";
-import { allowImportingTsExtensions, allowJs, checkJs } from "stores/defaults";
 import * as typescript from "typescript";
 import { URI } from "vscode-uri";
 import { version } from "vue";
 
+const allowImportingTsExtensions = true;
+const allowJs = true;
+const checkJs = true;
 const asFileName = ({ path }: { path: string }) => path;
 const asUri = (fileName: string) => URI.file(fileName);
 const vueCompilerOptions = (() => {
