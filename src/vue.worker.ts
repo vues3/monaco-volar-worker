@@ -1,5 +1,4 @@
 import type { ProjectContext } from "@volar/language-service";
-import type { worker } from "monaco-editor-core";
 
 import { createNpmFileSystem } from "@volar/jsdelivr";
 import { createTypeScriptWorkerLanguageService } from "@volar/monaco/worker";
@@ -46,11 +45,9 @@ const compilerOptions = (() => {
     target,
   };
 })();
-const env = (() => {
-  const fs = createNpmFileSystem();
-  const workspaceFolders = [URI.file("/")];
-  return { fs, workspaceFolders };
-})();
+const fs = createNpmFileSystem();
+const workspaceFolders = [URI.file("/")];
+const env = { fs, workspaceFolders };
 const uriConverter = { asFileName, asUri };
 const languageServicePlugins = getFullLanguageServicePlugins(typescript);
 const languagePlugins = [
@@ -58,26 +55,20 @@ const languagePlugins = [
     typescript,
     compilerOptions,
     vueCompilerOptions,
-    asFileName,
+    asFileName
   ),
 ];
-// eslint-disable-next-line no-restricted-globals
 self.onmessage = () => {
-  (initialize as (foreignModule) => void)(
-    (
-      workerContext: worker.IWorkerContext<
-        Record<string, (...args: string[]) => void>
-      >,
-    ) =>
-      createTypeScriptWorkerLanguageService({
-        compilerOptions,
-        env,
-        languagePlugins,
-        languageServicePlugins,
-        setup,
-        typescript,
-        uriConverter,
-        workerContext,
-      }),
+  initialize((workerContext) =>
+    createTypeScriptWorkerLanguageService({
+      compilerOptions,
+      env,
+      languagePlugins,
+      languageServicePlugins,
+      setup,
+      typescript,
+      uriConverter,
+      workerContext,
+    })
   );
 };
