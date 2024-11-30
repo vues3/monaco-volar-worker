@@ -7,7 +7,7 @@ import {
   getFullLanguageServicePlugins,
   resolveVueCompilerOptions,
 } from "@vue/language-service";
-import { initialize } from "monaco-editor-core/esm/vs/editor/editor.worker";
+import { initialize } from "monaco-editor/esm/vs/editor/editor.worker";
 import * as typescript from "typescript";
 import { URI } from "vscode-uri";
 import { version } from "vue";
