@@ -73,7 +73,7 @@ import { getOrCreateModel } from "@vues3/monaco-volar-worker/src/utils";
 import { editor, Uri } from "monaco-editor-core";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 
-const value = ref("<template></template>");
+const sfc = ref("<template></template>");
 const ambiguousCharacters = false;
 const automaticLayout = true;
 const fixedOverflowWidgets = true;
@@ -82,7 +82,11 @@ const monaco: Ref<HTMLElement | undefined> = ref();
 let editorInstance: editor.IStandaloneCodeEditor | undefined;
 const unicodeHighlight = { ambiguousCharacters };
 const { light: theme } = registerHighlighter();
-const model = getOrCreateModel(Uri.parse(`file:///monaco.vue`), "vue", value);
+const model = getOrCreateModel(
+  Uri.parse(`file:///monaco.vue`),
+  "vue",
+  sfc.value
+);
 onMounted(() => {
   if (monaco.value) {
     editorInstance = editor.create(monaco.value, {
@@ -92,6 +96,9 @@ onMounted(() => {
       scrollBeyondLastLine,
       theme,
       unicodeHighlight,
+    });
+    editorInstance.onDidChangeModelContent(() => {
+      sfc.value = editorInstance?.getValue();
     });
     editorInstance.focus();
   }
