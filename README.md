@@ -24,8 +24,8 @@ import {
 } from "@volar/monaco";
 import VueWorker from "@vues3/monaco-volar-worker/dist/vue.worker?worker";
 import * as languageConfigs from "@vues3/monaco-volar-worker/src/language-configs";
-import { editor, languages } from "monaco-editor";
-import EditorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
+import { editor, languages } from "monaco-editor-core";
+import EditorWorker from "monaco-editor-core/esm/vs/editor/editor.worker?worker";
 
 ...
 
@@ -70,7 +70,7 @@ import type { Ref } from "vue";
 
 import { registerHighlighter } from "@vues3/monaco-volar-worker/src/highlight";
 import { getOrCreateModel } from "@vues3/monaco-volar-worker/src/utils";
-import { editor, Uri } from "monaco-editor";
+import { editor, Uri } from "monaco-editor-core";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 
 const sfc = ref("<template></template>");
