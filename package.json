@@ -1,6 +1,6 @@
 {
   "name": "@vues3/monaco-volar-worker",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "type": "module",
   "scripts": {
     "build": "tsc && vite build"
