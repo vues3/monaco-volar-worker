@@ -83,7 +83,7 @@ let editorInstance: editor.IStandaloneCodeEditor | undefined;
 const unicodeHighlight = { ambiguousCharacters };
 const { light: theme } = registerHighlighter();
 const model = getOrCreateModel(
-  Uri.parse(`file:///monaco.vue`),
+  Uri.parse("file:///monaco.vue"),
   "vue",
   sfc.value
 );
