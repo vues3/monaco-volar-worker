@@ -18,7 +18,6 @@ jobs:
           scope: "@vues3"
       - run: npm ci
       - run: npm run build
-      - run: cat $NPM_CONFIG_USERCONFIG
       - run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
