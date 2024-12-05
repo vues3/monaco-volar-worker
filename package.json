@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "path-browserify": "^1.0.1",
-    "vite": "^6.0.2"
+    "vite": "^6.0.3"
   },
   "repository": {
     "type": "git",
