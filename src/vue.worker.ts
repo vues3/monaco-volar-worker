@@ -1,4 +1,11 @@
-import type { ProjectContext } from "@volar/language-service";
+import type {
+  LanguageServiceEnvironment,
+  LanguagePlugin,
+  FileSystem,
+  LanguageServicePlugin,
+} from "@volar/language-service";
+import { CompilerOptions } from "typescript";
+import type { VueCompilerOptions } from "@vue/language-core";
 
 import { createNpmFileSystem } from "@volar/jsdelivr";
 import { createTypeScriptWorkerLanguageService } from "@volar/monaco/worker";
@@ -12,50 +19,36 @@ import * as typescript from "typescript";
 import { URI } from "vscode-uri";
 import { version } from "vue";
 
-const allowImportingTsExtensions = true;
-const allowJs = true;
-const checkJs = true;
 const asFileName = ({ path }: { path: string }) => path;
 const asUri = (fileName: string) => URI.file(fileName);
-const vueCompilerOptions = (() => {
-  const target = Number(version.split(".").slice(0, -1).join("."));
-  return resolveVueCompilerOptions({ target });
-})();
-const setup = ({ project }: { project: ProjectContext }) => {
-  const compilerOptions = vueCompilerOptions;
-  const value = { compilerOptions };
-  Reflect.defineProperty(project, "vue", { value });
+const allowImportingTsExtensions: boolean = true;
+const allowJs: boolean = true;
+const checkJs: boolean = true;
+const target: number = Number(version.split(".").slice(0, -1).join("."));
+const vueCompilerOptions: VueCompilerOptions = resolveVueCompilerOptions({
+  target,
+});
+const compilerOptions: CompilerOptions = {
+  ...typescript.getDefaultCompilerOptions(),
+  allowImportingTsExtensions,
+  allowJs,
+  checkJs,
+  jsx: typescript.JsxEmit.Preserve,
+  module: typescript.ModuleKind.ESNext,
+  moduleResolution: typescript.ModuleResolutionKind.Bundler,
+  target: typescript.ScriptTarget.ESNext,
 };
-const compilerOptions = (() => {
-  const {
-    getDefaultCompilerOptions,
-    JsxEmit: { Preserve: jsx },
-    ModuleKind: { ESNext: module },
-    ModuleResolutionKind: { Bundler: moduleResolution },
-    ScriptTarget: { ESNext: target },
-  } = typescript;
-  return {
-    ...getDefaultCompilerOptions(),
-    allowImportingTsExtensions,
-    allowJs,
-    checkJs,
-    jsx,
-    module,
-    moduleResolution,
-    target,
-  };
-})();
-const fs = createNpmFileSystem();
-const workspaceFolders = [URI.file("/")];
-const env = { fs, workspaceFolders };
-const uriConverter = { asFileName, asUri };
-const languageServicePlugins = getFullLanguageServicePlugins(typescript);
-const languagePlugins = [
+const fs: FileSystem = createNpmFileSystem();
+const workspaceFolders: URI[] = [URI.file("/")];
+const env: LanguageServiceEnvironment = { fs, workspaceFolders };
+const languageServicePlugins: LanguageServicePlugin[] =
+  getFullLanguageServicePlugins(typescript);
+const languagePlugins: LanguagePlugin[] = [
   createVueLanguagePlugin(
     typescript,
     compilerOptions,
     vueCompilerOptions,
-    asFileName
+    asFileName,
   ),
 ];
 self.onmessage = () => {
@@ -65,10 +58,14 @@ self.onmessage = () => {
       env,
       languagePlugins,
       languageServicePlugins,
-      setup,
+      setup: ({ project }) => {
+        Reflect.defineProperty(project, "vue", {
+          value: { compilerOptions: vueCompilerOptions },
+        });
+      },
       typescript,
-      uriConverter,
+      uriConverter: { asFileName, asUri },
       workerContext,
-    })
+    }),
   );
 };
