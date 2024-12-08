@@ -14,7 +14,6 @@
     "@volar/jsdelivr": "^2.4.10",
     "@volar/language-service": "^2.4.10",
     "@volar/monaco": "^2.4.10",
-    "@vue/language-core": "^2.1.10",
     "@vue/language-service": "^2.1.10",
     "monaco-editor-core": "^0.52.0",
     "rollup": "^4.28.1",
