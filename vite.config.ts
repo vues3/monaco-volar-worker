@@ -8,12 +8,12 @@ import { defineConfig } from "vite";
 import { resolve } from "path";
 
 /** Build specific options */
-const build = (() => {
-  const lib = (() => {
+const build: BuildEnvironmentOptions = (() => {
+  const lib: LibraryOptions = (() => {
     /** Path of library entry */
-    const entry = resolve(resolve("src"), "vue.worker.ts") as InputOption;
+    const entry: InputOption = resolve(resolve("src"), "vue.worker.ts");
     /** Output bundle formats */
-    const formats = ["es"] as LibraryFormats[];
+    const formats: LibraryFormats[] = ["es"];
     /**
      * The name of the package file output. The default file name is the name
      * option of the project package.json. It can also be defined as a function
@@ -25,9 +25,9 @@ const build = (() => {
      * UMD mode. This will produce esm + cjs + umd bundle formats with default
      * configurations that are suitable for distributing libraries.
      */
-    return { entry, formats, fileName } as LibraryOptions;
+    return { entry, formats, fileName };
   })();
-  return { lib } as BuildEnvironmentOptions;
+  return { lib };
 })();
 
 export default defineConfig({ build });
