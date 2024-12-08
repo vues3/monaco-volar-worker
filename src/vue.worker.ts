@@ -45,10 +45,10 @@ const { options: compilerOptions } = (() => {
     "",
   );
 })();
-const env = (() => {
+const env: LanguageServiceEnvironment = (() => {
   const fs = createNpmFileSystem();
   const workspaceFolders = [URI.file("/")];
-  return { fs, workspaceFolders } as LanguageServiceEnvironment;
+  return { fs, workspaceFolders };
 })();
 const asFileName = ({ path }: { path: string }) => path;
 const languagePlugins = [
