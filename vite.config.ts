@@ -1,16 +1,28 @@
-import type { LibraryFormats } from "vite";
-
+import type {
+  LibraryFormats,
+  BuildEnvironmentOptions,
+  LibraryOptions,
+} from "vite";
+import type { InputOption } from "rollup";
 import { defineConfig } from "vite";
+import { resolve } from "path";
 
-const entry = "./src/vue.worker.ts";
+/** Path of library entry */
+const entry: InputOption = resolve(resolve("src"), "vue.worker.ts");
+/** Output bundle formats */
 const formats: LibraryFormats[] = ["es"];
-const lib = { entry, formats };
-const entryFileNames = "[name].js";
-const output = { entryFileNames };
-const external = ["vue"];
-const rollupOptions = { external, output };
-const build = { lib, rollupOptions };
-const path = "path-browserify";
-const alias = { path };
-const resolve = { alias };
-export default defineConfig({ build, resolve });
+/**
+ * The name of the package file output. The default file name is the name option
+ * of the project package.json. It can also be defined as a function taking the
+ * format as an argument.
+ */
+const fileName: string = "[name]";
+/**
+ * Build in library mode. The value should be the global name of the lib in UMD
+ * mode. This will produce esm + cjs + umd bundle formats with default
+ * configurations that are suitable for distributing libraries.
+ */
+const lib: LibraryOptions = { entry, formats, fileName };
+/** Build specific options */
+const build: BuildEnvironmentOptions = { lib };
+export default defineConfig({ build });
