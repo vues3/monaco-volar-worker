@@ -1,6 +1,6 @@
 {
   "name": "@vues3/monaco-volar-worker",
-  "version": "0.5.22",
+  "version": "0.5.23",
   "type": "module",
   "files": [
     "dist",
